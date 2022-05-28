@@ -13,7 +13,7 @@ const ProductItem = ({ id, imageUrl, price, title, description, createdAt }: Pro
       <Link to={`/products/${id}`}>
         <p className='product-item__title'>{title}</p>
         <img className='product-item__image' src={imageUrl} />
-        <p className='product-item__price'>${price}</p>
+        <p className='product-item__price'>{price}</p>
         <p className='product-item__createdAt'>{createdAt}</p>
       </Link>
       <button className='product-item__add-cart' onClick={() => addCart(id)}>
