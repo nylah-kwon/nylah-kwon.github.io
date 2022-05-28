@@ -5,6 +5,14 @@ body {
   margin: 0;
 }
 
+a {
+  color: gray;
+  text-decoration: none;
+  &:hover {
+    color: black;
+  }
+}
+
 #root {
   max-width: 900px;
   margin: 0 auto;
@@ -13,9 +21,12 @@ body {
 
 .gnb {
   ul {
+    padding: 0;
     list-style: none;
     display: flex;
     font-display: row;
-    gap: 10px;
+  }
+  li {
+    padding: 0.5rem 1rem;
   }
 }

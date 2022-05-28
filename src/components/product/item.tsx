@@ -11,10 +11,9 @@ const ProductItem = ({ id, imageUrl, price, title, description, createdAt }: Pro
   return (
     <li className='product-item'>
       <Link to={`/products/${id}`}>
-        <p className='product-item__title'>{title}</p>
         <img className='product-item__image' src={imageUrl} />
-        <p className='product-item__price'>{price}</p>
-        <p className='product-item__createdAt'>{createdAt}</p>
+        <p className='product-item__title'>{title}</p>
+        <p className='product-item__price'>{price.toLocaleString()}원</p>
       </Link>
       <button className='product-item__add-cart' onClick={() => addCart(id)}>
         장바구니 담기

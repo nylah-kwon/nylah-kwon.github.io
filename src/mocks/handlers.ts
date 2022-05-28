@@ -7,7 +7,7 @@ import { ADD_CART, CartType, DELETE_CART, GET_CART, UPDATE_CART } from '../graph
 const mockProducts = (() =>
   Array.from({ length: 20 }).map((_, i) => ({
     id: i + 1 + '',
-    imageUrl: `http://placeimg.com/640/480/${i + 1}`,
+    imageUrl: `http://placeimg.com/450/300/${i + 1}`,
     price: 50000,
     title: `임시상품${i + 1}`,
     description: `임시설명${i + 1}`,
