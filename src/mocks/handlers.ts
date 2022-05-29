@@ -3,6 +3,7 @@ import { QueryKeys } from '../queryClient';
 import { v4 as uuid } from 'uuid';
 import GET_PRODUCTS, { GET_PRODUCT } from '../graphql/products';
 import { ADD_CART, CartType, DELETE_CART, GET_CART, UPDATE_CART } from '../graphql/cart';
+import { EXECUTE_PAY } from '../graphql/payment';
 
 const mockProducts = (() =>
   Array.from({ length: 20 }).map((_, i) => ({
@@ -69,5 +70,8 @@ export const handlers = [
     delete newData[id];
     cartData = newData;
     return res(ctx.data(id));
+  }),
+  graphql.mutation(EXECUTE_PAY, ({ variables }, res, ctx) => {
+    return res();
   }),
 ];

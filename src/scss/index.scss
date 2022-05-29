@@ -1,6 +1,7 @@
 @import 'products';
 @import 'cart';
 
+@import 'payment';
 body {
   margin: 0;
 }
@@ -11,6 +12,13 @@ a {
   &:hover {
     color: black;
   }
+  &:active {
+    color: black;
+  }
+}
+
+ul {
+  list-style: none;
 }
 
 #root {
@@ -22,7 +30,6 @@ a {
 .gnb {
   ul {
     padding: 0;
-    list-style: none;
     display: flex;
     font-display: row;
   }

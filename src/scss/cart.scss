@@ -3,7 +3,6 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   padding: 0;
-  list-style: none;
 }
 
 .cart-item {
@@ -40,6 +39,39 @@
     width: 3em;
     height: 2rem;
     text-align: center;
+  }
+  &__button {
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    &:hover {
+      background-color: rgb(0, 0, 0, 0.1);
+    }
+    &:active {
+      color: white;
+      background-color: black;
+    }
+  }
+}
+
+.cart-willpay {
+  //float: right;
+  text-align: center;
+  li {
+    border-bottom: 2px solid rgb(0, 0, 0, 0.1);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+    p {
+      width: 120px;
+    }
+  }
+  &__totalPrice {
+    font-size: 1.2rem;
+    font-weight: bold;
   }
   &__button {
     border: 1px solid transparent;
