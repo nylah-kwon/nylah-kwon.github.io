@@ -8,7 +8,7 @@ import { EXECUTE_PAY } from '../graphql/payment';
 const mockProducts = (() =>
   Array.from({ length: 20 }).map((_, i) => ({
     id: i + 1 + '',
-    imageUrl: `http://placeimg.com/450/300/${i + 1}`,
+    imageUrl: `http://picsum.photos/id/${i + 20}/450/300`,
     price: 50000,
     title: `임시상품${i + 1}`,
     description: `임시설명${i + 1}`,
@@ -26,8 +26,8 @@ export const handlers = [
     );
   }),
   graphql.query(GET_PRODUCT, (req, res, ctx) => {
-    const targetProduct = mockProducts.find((item) => item.id === req.variables.id);
-    if (targetProduct) return res(ctx.data(targetProduct));
+    const found = mockProducts.find((item) => item.id === req.variables.id);
+    if (found) return res(ctx.data(found));
     return res();
   }),
   graphql.query(GET_CART, (req, res, ctx) => {
@@ -71,7 +71,10 @@ export const handlers = [
     cartData = newData;
     return res(ctx.data(id));
   }),
-  graphql.mutation(EXECUTE_PAY, ({ variables }, res, ctx) => {
-    return res();
+  graphql.mutation(EXECUTE_PAY, ({ variables: ids }, res, ctx) => {
+    ids.forEach((id: string) => {
+      delete cartData[id];
+    });
+    return res(ctx.data(ids));
   }),
 ];
