@@ -1,67 +1,74 @@
-import { Resolver } from './types';
+import { DBField, writeDB } from '../dbController';
+import { Cart, Resolver } from './types';
 
-const mockProducts = (() =>
-  Array.from({ length: 20 }).map((_, i) => ({
-    id: i + 1 + '',
-    imageUrl: `http://picsum.photos/id/${i + 20}/450/300`,
-    price: 50000,
-    title: `임시상품${i + 1}`,
-    description: `임시설명${i + 1}`,
-    createdAt: new Date(1646745501883 + i * 1000 * 60 * 60 * 10).toString(),
-  })))();
-
-let cartData = [
-  { id: '1', amount: 2 },
-  { id: '3', amount: 4 },
-];
+const setJSON = (data: Cart) => writeDB(DBField.CART, data);
 
 const cartResolver: Resolver = {
   Query: {
-    cart: () => {
-      return cartData;
+    cart: (parent, args, { db }) => {
+      return db.cart;
     },
   },
   Mutation: {
-    addCart: (parent, { id }, centext, info) => {
-      const newCartData = { ...cartData };
-      const targetProduct = mockProducts.find((item) => item.id === id);
-
+    addCart: (parent, { id }, { db }) => {
+      if (!id) throw Error('상품 id가 없습니다.');
+      const targetProduct = db.products.find((item) => item.id === id);
       if (!targetProduct) {
         throw new Error('상품이 없습니다!');
       }
 
-      const newItem = {
-        ...targetProduct,
-        amount: (newCartData[id]?.amount || 0) + 1,
-      };
-      newCartData[id] = newItem;
-      cartData = newCartData;
-      return newItem;
-    },
-    updateCart: (parent, { id, amount }, centext, info) => {
-      const newData = { ...cartData };
-      if (!newData[id]) {
-        throw new Error('없는 데이터입니다.');
+      const existCartIndex = db.cart.findIndex((item) => item.id === id);
+      if (existCartIndex > -1) {
+        const newCartItem = {
+          id,
+          amount: db.cart[existCartIndex].amount + 1,
+        };
+        db.cart.splice(existCartIndex, 1, newCartItem);
+        setJSON(db.cart);
+        return newCartItem;
       }
       const newItem = {
-        ...newData[id],
-        amount,
+        id,
+        amount: 1,
       };
-      newData[id] = newItem;
-      cartData = newData;
+      db.cart.push(newItem);
+      setJSON(db.cart);
       return newItem;
     },
-    deleteCart: (parent, { id }, centext, info) => {
-      const newData = { ...cartData };
-      delete newData[id];
-      cartData = newData;
+    updateCart: (parent, { id, amount }, { db }) => {
+      const existCartIndex = db.cart.findIndex((item) => item.id === id);
+
+      if (existCartIndex < 0) {
+        throw new Error('없는 데이터입니다.');
+      }
+      const newCartItem = {
+        id,
+        amount,
+      };
+      db.cart.splice(existCartIndex, 1, newCartItem);
+      setJSON(db.cart);
+      return newCartItem;
+    },
+    deleteCart: (parent, { id }, { db }) => {
+      const existCartIndex = db.cart.findIndex((item) => item.id === id);
+
+      if (existCartIndex < 0) {
+        throw new Error('없는 데이터입니다.');
+      }
+      db.cart.splice(existCartIndex, 1);
+      setJSON(db.cart);
       return id;
     },
-    executePay: (parent, { ids }, centext, info) => {
-      const newCartData = cartData.filter((cartItem) => !ids.includes(cartItem.id));
-      cartData = newCartData;
+    executePay: (parent, { ids }, { db }) => {
+      const newCartData = db.cart.filter((cartItem) => !ids.includes(cartItem.id));
+      db.cart = newCartData;
+      setJSON(db.cart);
       return ids;
     },
+  },
+  CartItem: {
+    product: (cartItem, args, { db }) =>
+      db.products.find((product: any) => product.id === cartItem.id),
   },
 };
 
