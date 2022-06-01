@@ -11,6 +11,11 @@ const Cart = () => {
   const cartItems = (data?.cart || []) as CartType[];
   if (!cartItems.length) return <div>장바구니가 비었습니다.</div>;
 
-  return <CartList items={cartItems} />;
+  return (
+    <div>
+      <h2>장바구니</h2>
+      <CartList items={cartItems} />
+    </div>
+  );
 };
 export default Cart;
