@@ -30,6 +30,7 @@ export type Products = Product[];
 export type CartItem = {
   id: string;
   amount: number;
+  //product: Product;
 };
 
 export type Cart = CartItem[];

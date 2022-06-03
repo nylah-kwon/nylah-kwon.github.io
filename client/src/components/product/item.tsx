@@ -5,8 +5,6 @@ import { Product } from '../../graphql/products';
 import { graphqlFetcher } from '../../queryClient';
 
 const ProductItem = ({ id, imageUrl, price, title, description, createdAt }: Product) => {
-  //const [cartAmount, setCartAmount] = useRecoilState(cartItemSelector(id));
-  //onst addToCart = () => setCartAmount((cartAmount || 0) + 1);
   const { mutate: addCart } = useMutation((id: string) => graphqlFetcher(ADD_CART, { id }));
   return (
     <li className='product-item'>

@@ -5,7 +5,7 @@ import { ForwardedRef, forwardRef, SyntheticEvent } from 'react';
 import ItemData from './itemData';
 
 const CartItem = (
-  { id, product: { imageUrl, price, title }, amount }: CartType,
+  { id, product: { imageUrl, price, title, createdAt }, amount }: CartType,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const queryClient = getClient();
@@ -19,7 +19,7 @@ const CartItem = (
         ) || { cart: [] };
         if (!prevCart) return null;
 
-        const targetIndex = prevCart?.findIndex((cartItem) => cartItem.id === id);
+        const targetIndex = prevCart.findIndex((cartItem) => cartItem.id === id);
         if (targetIndex === undefined || targetIndex < 0) return prevCart;
 
         const newCart = [...prevCart];
@@ -31,7 +31,6 @@ const CartItem = (
         const { cart: prevCart } = queryClient.getQueryData<{ cart: CartType[] }>(
           QueryKeys.CART
         ) || { cart: [] };
-
         const targetIndex = prevCart?.findIndex((cartItem) => cartItem.id === updateCart.id);
         if (!prevCart || targetIndex === undefined || targetIndex < 0) return;
 
@@ -69,15 +68,21 @@ const CartItem = (
         name={`select-item`}
         ref={ref}
         data-id={id}
+        disabled={!createdAt}
       />
       <ItemData title={title} imageUrl={imageUrl} price={price} />
-      <input
-        className='cart-item__amount'
-        type='number'
-        value={amount}
-        min={1}
-        onChange={handleUpdateAmount}
-      ></input>
+      {!createdAt ? (
+        <div>삭제된 상품입니다.</div>
+      ) : (
+        <input
+          className='cart-item__amount'
+          type='number'
+          value={amount}
+          min={1}
+          onChange={handleUpdateAmount}
+        />
+      )}
+
       <button className='cart-item__button' type='button' onClick={handleDeleteItem}>
         삭제
       </button>
