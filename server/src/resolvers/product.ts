@@ -28,7 +28,10 @@ const productResolover: Resolver = {
     products: async (parent, { cursor = '', showDeleted = false }) => {
       const products = collection(db, 'products');
       const queryOptions = [orderBy('createdAt', 'desc')];
-      if (cursor) queryOptions.push(startAfter(cursor));
+      if (cursor) {
+        const snapshot = await getDoc(doc(db, 'products', cursor));
+        queryOptions.push(startAfter(snapshot));
+      }
       if (!showDeleted) queryOptions.unshift(where('createdAt', '!=', null));
       const q = query(products, ...queryOptions, limit(PAGE_SIZE));
 
@@ -69,7 +72,10 @@ const productResolover: Resolver = {
     updateProduct: async (parent, { id, ...data }) => {
       const productRef = doc(db, 'products', id);
       if (!productRef) throw new Error('없는 상품입니다.');
-      await updateDoc(productRef, data);
+      await updateDoc(productRef, {
+        ...data,
+        createdAt: serverTimestamp(),
+      });
       const snapshot = await getDoc(productRef);
       return {
         ...snapshot.data(),
