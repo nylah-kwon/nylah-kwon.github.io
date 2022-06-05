@@ -72,7 +72,7 @@ const CartItem = (
       />
       <ItemData title={title} imageUrl={imageUrl} price={price} />
       {!createdAt ? (
-        <div>삭제된 상품입니다.</div>
+        <div>품절</div>
       ) : (
         <input
           className='cart-item__amount'

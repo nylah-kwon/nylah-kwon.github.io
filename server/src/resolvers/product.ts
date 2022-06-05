@@ -1,7 +1,5 @@
-import { Products, Resolver } from './types';
-import { v4 as uuid } from 'uuid';
-import { DBField, writeDB } from '../dbController';
-import { db } from '../../firebase';
+import { Resolver } from './types';
+import { db } from '../firebase';
 import {
   collection,
   doc,
@@ -16,12 +14,9 @@ import {
   serverTimestamp,
   addDoc,
   updateDoc,
-  deleteDoc,
 } from 'firebase/firestore';
 
 const PAGE_SIZE = 15;
-
-const setJSON = (data: Products) => writeDB(DBField.PRODUCTS, data);
 
 const productResolover: Resolver = {
   Query: {

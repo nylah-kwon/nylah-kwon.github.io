@@ -1,4 +1,5 @@
 import { Product } from '../../graphql/products';
+import AddForm from './addForm';
 import AdminItem from './item';
 
 const AdminList = ({
@@ -13,6 +14,7 @@ const AdminList = ({
   doneEdit: () => void;
 }) => (
   <ul className='products'>
+    <AddForm />
     {list.map((page) =>
       page.products.map((product, i) => (
         <AdminItem

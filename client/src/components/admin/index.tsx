@@ -36,7 +36,6 @@ const Admin = () => {
 
   return (
     <>
-      <AddForm />
       <AdminList
         list={data?.pages || []}
         editingIndex={editingIndex}

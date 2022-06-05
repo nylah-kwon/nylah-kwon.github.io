@@ -62,19 +62,26 @@ const AdminItem = ({
     return (
       <li className='product-item'>
         <form onSubmit={handleSubmit}>
-          <label>
-            상품명 : <input name='title' type='text' required defaultValue={title} />
-          </label>
-          <label>
-            이미지URL : <input name='imageUrl' type='text' required defaultValue={imageUrl} />
-          </label>
-          <label>
-            상품가격 : <input name='price' type='number' required min='1000' defaultValue={price} />
-          </label>
-          <label>
-            상세 : <input name='description' defaultValue={description} />
-          </label>
-          <button type='submit'>저장</button>
+          <p className='top'>상품 정보 수정</p>
+          <div className='product-item__edit'>
+            <p>상품명</p>
+            <input name='title' type='text' required defaultValue={title} />
+          </div>
+          <div className='product-item__edit'>
+            <p>이미지URL</p>
+            <input name='imageUrl' required defaultValue={imageUrl} />
+          </div>
+          <div className='product-item__edit'>
+            <p>상품가격</p>
+            <input name='price' type='number' required min='1000' defaultValue={price} />
+          </div>
+          <div className='product-item__edit'>
+            <p>상세</p>
+            <input name='description' defaultValue={description} />
+          </div>
+          <button className='product-item__save-cart' type='submit'>
+            저장
+          </button>
         </form>
       </li>
     );

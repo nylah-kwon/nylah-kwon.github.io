@@ -1,5 +1,3 @@
-type Method = 'Query' | 'Mutation';
-
 export type Resolver = {
   [k: string]: {
     [key: string]: (
@@ -30,7 +28,6 @@ export type Products = Product[];
 export type CartItem = {
   id: string;
   amount: number;
-  //product: Product;
 };
 
 export type Cart = CartItem[];
