@@ -1,40 +1,14 @@
 @import 'products';
 @import 'cart';
-
+@import 'nav';
 @import 'payment';
 
 body {
   margin: 0;
 }
 
-a {
-  color: gray;
-  text-decoration: none;
-  &:hover {
-    color: black;
-  }
-  &:active {
-    color: black;
-  }
-}
-
-ul {
-  list-style: none;
-}
-
 #root {
   max-width: 900px;
   margin: 0 auto;
   padding: 10px;
-}
-
-.gnb {
-  ul {
-    padding: 0;
-    display: flex;
-    font-display: row;
-  }
-  li {
-    padding: 0.5rem 1rem;
-  }
 }

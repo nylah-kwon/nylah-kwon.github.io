@@ -1,0 +1,57 @@
+nav {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr; /* only column intially */
+  grid-auto-flow: dense;
+  justify-items: stretch;
+  align-items: stretch;
+  column-gap: 20px;
+  a {
+    text-decoration: none;
+  }
+}
+.logo {
+  width: 100px;
+  grid-column: -3; /* create an implicit one at the beginning */
+  text-align: center;
+  padding: 0.9rem;
+  font-size: 1.2rem;
+  .bold {
+    font-weight: bold;
+  }
+}
+.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  grid-column: 1; /* take the explicit one */
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.link {
+  color: gray;
+  &__active {
+    color: black;
+  }
+}
+
+.login {
+  padding: 0.5rem;
+  grid-column: 2; /* create an implicit one at the end */
+  &__button {
+    background-color: aquamarine;
+    color: black;
+    font-size: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    padding: 0.5rem 2rem;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+    &:active {
+      background-color: black;
+    }
+  }
+}
